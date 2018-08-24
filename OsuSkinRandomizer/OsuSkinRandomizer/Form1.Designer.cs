@@ -39,9 +39,10 @@
             this.chk_Sounds = new System.Windows.Forms.CheckBox();
             this.chk_standard = new System.Windows.Forms.CheckBox();
             this.chk_taiko = new System.Windows.Forms.CheckBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.chk_corruption = new System.Windows.Forms.CheckBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -50,7 +51,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(237, 20);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "<your osu skin folder here>";
+            this.textBox1.Text = "C:\\Users\\Tobias\\AppData\\Local\\osu!\\Skins\\ALL FUCKING SKINS";
             // 
             // label1
             // 
@@ -76,13 +77,13 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(283, 20);
             this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "RandomOsuSkin";
+            this.textBox2.Text = "+1RandomOsuSkin";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(265, 73);
+            this.button1.Location = new System.Drawing.Point(12, 119);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 40);
+            this.button1.Size = new System.Drawing.Size(406, 23);
             this.button1.TabIndex = 4;
             this.button1.Text = "Generate";
             this.button1.UseVisualStyleBackColor = true;
@@ -121,7 +122,7 @@
             // chk_Sounds
             // 
             this.chk_Sounds.AutoSize = true;
-            this.chk_Sounds.Location = new System.Drawing.Point(15, 96);
+            this.chk_Sounds.Location = new System.Drawing.Point(210, 73);
             this.chk_Sounds.Name = "chk_Sounds";
             this.chk_Sounds.Size = new System.Drawing.Size(62, 17);
             this.chk_Sounds.TabIndex = 8;
@@ -131,7 +132,7 @@
             // chk_standard
             // 
             this.chk_standard.AutoSize = true;
-            this.chk_standard.Location = new System.Drawing.Point(75, 96);
+            this.chk_standard.Location = new System.Drawing.Point(270, 73);
             this.chk_standard.Name = "chk_standard";
             this.chk_standard.Size = new System.Drawing.Size(95, 17);
             this.chk_standard.TabIndex = 9;
@@ -141,21 +142,12 @@
             // chk_taiko
             // 
             this.chk_taiko.AutoSize = true;
-            this.chk_taiko.Location = new System.Drawing.Point(176, 96);
+            this.chk_taiko.Location = new System.Drawing.Point(371, 73);
             this.chk_taiko.Name = "chk_taiko";
             this.chk_taiko.Size = new System.Drawing.Size(53, 17);
             this.chk_taiko.TabIndex = 10;
             this.chk_taiko.Text = "Taiko";
             this.chk_taiko.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(15, 119);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(404, 126);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 11;
-            this.pictureBox1.TabStop = false;
             // 
             // button2
             // 
@@ -167,13 +159,47 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // chk_corruption
+            // 
+            this.chk_corruption.AutoSize = true;
+            this.chk_corruption.Location = new System.Drawing.Point(15, 96);
+            this.chk_corruption.Name = "chk_corruption";
+            this.chk_corruption.Size = new System.Drawing.Size(104, 17);
+            this.chk_corruption.TabIndex = 13;
+            this.chk_corruption.Text = "Corruption-Mode";
+            this.chk_corruption.UseVisualStyleBackColor = true;
+            this.chk_corruption.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(270, 90);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(148, 23);
+            this.button3.TabIndex = 14;
+            this.button3.Text = "Create Standard-Size file";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(124, 96);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(139, 17);
+            this.checkBox1.TabIndex = 15;
+            this.checkBox1.Text = "Total-Random-Madness";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 254);
+            this.ClientSize = new System.Drawing.Size(430, 150);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.chk_corruption);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.chk_taiko);
             this.Controls.Add(this.chk_standard);
             this.Controls.Add(this.chk_Sounds);
@@ -191,7 +217,6 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "OSU SKIN RANDOMIZER by Sillus";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -210,8 +235,10 @@
         private System.Windows.Forms.CheckBox chk_Sounds;
         private System.Windows.Forms.CheckBox chk_standard;
         private System.Windows.Forms.CheckBox chk_taiko;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox chk_corruption;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

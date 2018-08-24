@@ -91,6 +91,7 @@
     <Content Include="OsuSkinnables\skinnableMania.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="OsuSkinnables\skinnableNumbers.txt" />
     <Content Include="OsuSkinnables\skinnableSounds.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
