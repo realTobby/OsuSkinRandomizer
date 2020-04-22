@@ -79,6 +79,7 @@
     <Compile Include="Forms\StartupWindow.xaml.cs">
       <DependentUpon>StartupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logic\SaveHandler.cs" />
     <Compile Include="Logic\StartupCheck.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -127,10 +128,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\circle.gif">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CustomToolNamespace>SkinRandomizer</CustomToolNamespace>
-    </Content>
+    <Resource Include="Assets\circle.gif" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

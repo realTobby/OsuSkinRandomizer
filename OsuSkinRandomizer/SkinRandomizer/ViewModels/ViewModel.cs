@@ -35,5 +35,19 @@ namespace SkinRandomizer.ViewModels
                 base.OnPropertyChanged(nameof(IsSkinFolderFound));
             }
         }
+
+        private string _osuFolder = "";
+        public string OsuFolder
+        {
+            get
+            {
+                return _osuFolder;
+            }
+            set
+            {
+                _osuFolder = value;
+                base.OnPropertyChanged(nameof(OsuFolder));
+            }
+        }
     }
 }

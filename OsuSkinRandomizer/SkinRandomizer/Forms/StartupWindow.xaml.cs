@@ -41,7 +41,7 @@ namespace SkinRandomizer.Forms
 
         public string GetOsuFolder()
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
 
             return starter.GetDirectoryString();
         }

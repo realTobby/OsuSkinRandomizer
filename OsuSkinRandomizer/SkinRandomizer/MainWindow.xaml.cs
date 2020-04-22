@@ -26,7 +26,7 @@ namespace SkinRandomizer
     public partial class MainWindow : Window
     {
         private ViewModel myViewModel;
-
+        private SaveHandler sh = new SaveHandler();
         public MainWindow()
         {
             InitializeComponent();
@@ -35,22 +35,27 @@ namespace SkinRandomizer
             this.DataContext = myViewModel;
             this.Show();
 
-            StartupWindow sw = new StartupWindow();
-            try
+            sh.Load();
+            if(sh.IsDirectoryAvailable == false)
             {
-                    string wtf = sw.GetOsuFolder();
+                StartupWindow sw = new StartupWindow();
+                try
+                {
+                    var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+                    Task.Run(() =>
+                    {
+                        myViewModel.OsuFolder = sw.GetOsuFolder();
+                    }).ContinueWith(task =>
+                    {
+                        sw.Close();
+                    }, uiScheduler);
+                }
+                catch (System.InvalidOperationException sio)
+                {
                     sw.Close();
+                }
             }
-            catch(System.InvalidOperationException sio)
-            {
-                sw.Close();
-            }
-            
-
-            
-
+            sh.Save(myViewModel.OsuFolder);
         }
-
-        
     }
 }
