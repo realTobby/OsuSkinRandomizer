@@ -5,31 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SkinRandomizer.Logic
-{
-    public enum FolderStatus
-    {
-        NOTFOUND,
-        FOUND
-    }
+{ 
 
     public class StartupCheck
     {
-        private FolderStatus osuFolderStatus = FolderStatus.NOTFOUND;
         private string osuFolder = "NOTFOUND";
         public string GetDirectoryString()
         {
             return osuFolder;
-        }
-
-        public FolderStatus FindOsuFolder()
-        {
-            osuFolder = GetOsuDirectory();
-            if(osuFolder == FolderStatus.NOTFOUND.ToString())
-            {
-                osuFolderStatus = FolderStatus.NOTFOUND;
-            }
-            osuFolderStatus = FolderStatus.FOUND;
-            return osuFolderStatus;
         }
 
         /// Code Credits: https://osu.ppy.sh/users/1404615 THANKS! Found your snippet in the Forum and changed it a bit :)

@@ -1,22 +1,6 @@
-﻿using SkinRandomizer.Forms;
-using SkinRandomizer.Logic;
+﻿using SkinRandomizer.Logic;
 using SkinRandomizer.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SkinRandomizer
 {
@@ -36,26 +20,23 @@ namespace SkinRandomizer
             this.Show();
 
             sh.Load();
+            
             if(sh.IsDirectoryAvailable == false)
             {
-                StartupWindow sw = new StartupWindow();
-                try
+                StartupCheck sc = new StartupCheck();
+                string path = sc.GetDirectoryString();
+                if(path == "NOTFOUND")
                 {
-                    var uiScheduler = TaskScheduler.FromCurrentSynchronizationContext();
-                    Task.Run(() =>
-                    {
-                        myViewModel.OsuFolder = sw.GetOsuFolder();
-                    }).ContinueWith(task =>
-                    {
-                        sw.Close();
-                    }, uiScheduler);
+                    myViewModel.OsuFolder = "Osu Folder not found...please specify manually!";
                 }
-                catch (System.InvalidOperationException sio)
+                else
                 {
-                    sw.Close();
+                    myViewModel.OsuFolder = path;
+                    sh.Save(myViewModel.OsuFolder);
                 }
             }
-            sh.Save(myViewModel.OsuFolder);
+
+            
         }
     }
 }
