@@ -11,6 +11,7 @@ namespace SkinRandomizer
     {
         private ViewModel myViewModel;
         private SaveHandler sh = new SaveHandler();
+        private SkinGenerator sg;
         public MainWindow()
         {
             InitializeComponent();
@@ -34,8 +35,26 @@ namespace SkinRandomizer
                     myViewModel.OsuFolder = path;
                     sh.Save(myViewModel.OsuFolder);
                 }
+            
             }
 
+
+            
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\EpicRandomSkin"))
+            {
+                MessageBox.Show("currently, you need to delete the old random skin before you create a new one :/");
+            }
+            else
+            {
+                sg = new SkinGenerator(myViewModel.OsuFolder, "EpicRandomSkin");
+                sg.Generate();
+                MessageBox.Show("New skin created! its probably hot garbage :/");
+            }
             
         }
     }

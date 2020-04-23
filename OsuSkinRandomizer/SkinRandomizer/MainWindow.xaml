@@ -5,11 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkinRandomizer"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800">
+        Title="{Binding WindowTitle}" Height="300" Width="800">
     <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBox Height="32" Margin="0,10,0,0" Text="{Binding OsuFolder}" />
-            <Button Content="Change osu directory..."/>
-        </StackPanel>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="upperGrid" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Stretch">
+                <Button Content="Change OSU directory" Margin="10,10,10,10"/>
+                <TextBox Text="{Binding OsuFolder}" Margin="0,10,0,10" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="lowerGrid" Grid.Row="1">
+
+            <Button Content="Generate Random Skin" Margin="20,20,20,20" Click="Button_Click"/>
+
+        </Grid>
+        
+        
     </Grid>
 </Window>

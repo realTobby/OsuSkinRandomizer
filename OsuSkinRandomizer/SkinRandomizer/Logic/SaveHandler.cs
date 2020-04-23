@@ -19,10 +19,9 @@ namespace SkinRandomizer.Logic
 
         public void Load()
         {
-            string[] configLines = System.IO.File.ReadAllLines("config.cfg");
-
             if(System.IO.File.Exists("config.cfg"))
             {
+                string[] configLines = System.IO.File.ReadAllLines("config.cfg");
                 OsuDirectory = configLines[0].Replace("OsuDir=", string.Empty);
                 if (OsuDirectory == string.Empty)
                 {

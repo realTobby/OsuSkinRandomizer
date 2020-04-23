@@ -12,7 +12,7 @@ namespace SkinRandomizer.Logic
         private string osuFolder = "NOTFOUND";
         public string GetDirectoryString()
         {
-            return osuFolder;
+            return GetOsuDirectory();
         }
 
         /// Code Credits: https://osu.ppy.sh/users/1404615 THANKS! Found your snippet in the Forum and changed it a bit :)
