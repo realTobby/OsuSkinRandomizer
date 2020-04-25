@@ -74,9 +74,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IGenerator.cs" />
+    <Compile Include="Logic\Generators\BaseGenerator.cs" />
+    <Compile Include="Logic\Generators\PlayableGenerator.cs" />
     <Compile Include="Logic\SaveHandler.cs" />
-    <Compile Include="Logic\SkinGenerator.cs" />
+    <Compile Include="Logic\Generators\TotalRandomGenerator.cs" />
     <Compile Include="Logic\StartupCheck.cs" />
+    <Compile Include="Models\SkinnableFile.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="MainWindow.xaml">

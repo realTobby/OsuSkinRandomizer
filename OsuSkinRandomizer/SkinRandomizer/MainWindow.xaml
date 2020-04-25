@@ -21,8 +21,11 @@
         </Grid>
 
         <Grid x:Name="lowerGrid" Grid.Row="1">
-
-            <Button Content="Generate Random Skin" Margin="20,20,20,20" Click="Button_Click"/>
+            <StackPanel>
+                <Button x:Name="btn_total_random_debug" Content="Total Random Skin" Margin="20,20,20,20" Click="Button_Click"/>
+                <Button x:Name="btn_playable_debug" Content="Playable Random Skin" Margin="20,20,20,20" Click="btn_playable_debug_Click"/>
+            </StackPanel>
+            
 
         </Grid>
         

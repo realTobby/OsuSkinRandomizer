@@ -1,6 +1,8 @@
 ﻿using SkinRandomizer.Logic;
 using SkinRandomizer.ViewModels;
 using System.Windows;
+using SkinRandomizer.Logic.Generators;
+using SkinRandomizer.Interfaces;
 
 namespace SkinRandomizer
 {
@@ -11,7 +13,7 @@ namespace SkinRandomizer
     {
         private ViewModel myViewModel;
         private SaveHandler sh = new SaveHandler();
-        private SkinGenerator sg;
+        private IGenerator sg;
         public MainWindow()
         {
             InitializeComponent();
@@ -51,11 +53,26 @@ namespace SkinRandomizer
             }
             else
             {
-                sg = new SkinGenerator(myViewModel.OsuFolder, "EpicRandomSkin");
+                sg = new TotalRandomGenerator();
+                sg.Init(myViewModel.OsuFolder, "EpicRandomSkin");
                 sg.Generate();
                 MessageBox.Show("New skin created! its probably hot garbage :/");
             }
-            
+        }
+
+        private void btn_playable_debug_Click(object sender, RoutedEventArgs e)
+        {
+            if (System.IO.Directory.Exists(myViewModel.OsuFolder + @"\EpicRandomSkin"))
+            {
+                MessageBox.Show("currently, you need to delete the old random skin before you create a new one :/");
+            }
+            else
+            {
+                sg = new PlayableGenerator();
+                sg.Init(myViewModel.OsuFolder, "EpicRandomSkin");
+                sg.Generate();
+                MessageBox.Show("New skin created! its probably hot garbage :/");
+            }
         }
     }
 }
