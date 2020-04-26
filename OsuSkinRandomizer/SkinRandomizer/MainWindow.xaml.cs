@@ -13,7 +13,7 @@ namespace SkinRandomizer
     public partial class MainWindow : Window
     {
         private ViewModel myViewModel;
-        private SaveHandler sh = new SaveHandler();
+        private SaveHandler SAVE_HANDLER = new SaveHandler();
         
         public MainWindow()
         {
@@ -23,9 +23,9 @@ namespace SkinRandomizer
             this.DataContext = myViewModel;
             this.Show();
 
-            sh.Load();
+            SAVE_HANDLER.Load();
             
-            if(sh.IsDirectoryAvailable == false)
+            if(SAVE_HANDLER.IsDirectoryAvailable == false) // check if the config has the directory in it
             {
                 StartupCheck sc = new StartupCheck();
                 string path = sc.GetDirectoryString();
@@ -36,7 +36,7 @@ namespace SkinRandomizer
                 else
                 {
                     myViewModel.OsuFolder = path;
-                    sh.Save(myViewModel.OsuFolder);
+                    SAVE_HANDLER.Save(myViewModel.OsuFolder);
                 }
             }
         }
@@ -44,40 +44,40 @@ namespace SkinRandomizer
         private void btn_generate_Click(object sender, RoutedEventArgs e)
         {
 
-            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\" + myViewModel.CreationName))
+            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\" + myViewModel.CreationName)) // check if the skin folder with the creation name exists
             {
-                System.IO.Directory.Delete(myViewModel.OsuFolder + @"\" + myViewModel.CreationName, true);
+                System.IO.Directory.Delete(myViewModel.OsuFolder + @"\" + myViewModel.CreationName, true); // delete everything in it and the folder 
             }
-            System.IO.Directory.CreateDirectory(myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+            System.IO.Directory.CreateDirectory(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create it
 
-            IGenerator sg = new BaseGenerator();
+            IGenerator sg = new BaseGenerator(); // create a generic base generator
 
             if (myViewModel.IsCorruptionMode == true)
             {
-                sg = new CorruptionGenerator();
+                sg = new CorruptionGenerator(); // specify it
             }
             if (myViewModel.IsNormalRandomMode == true)
             {
-                sg = new TotalRandomGenerator();
+                sg = new TotalRandomGenerator(); // specify it
             }
 
-            sg.Init(myViewModel.OsuFolder, myViewModel.CreationName);
-            sg.Generate();
+            sg.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
+            sg.Generate(); // generate the skin
 
-            PreviewGenerate pg = new PreviewGenerate();
-            myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+            PreviewGenerate pg = new PreviewGenerate(); 
+            myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin
 
-            System.Windows.MessageBox.Show("Your skin has been successfully created!");
+            System.Windows.MessageBox.Show("Your skin has been successfully created!"); // done
         }
 
         private void btn_osu_folder_find_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Forms.FolderBrowserDialog objDialog = new FolderBrowserDialog();
-            objDialog.Description = "Beschreibung";
-            objDialog.SelectedPath = @"C:\";       // Vorgabe Pfad (und danach der gewählte Pfad)
+            objDialog.Description = "Select OSU Directory";
+            objDialog.SelectedPath = @"C:\";
             if (objDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if(objDialog.SelectedPath.Contains("Skins"))
+                if(objDialog.SelectedPath.Contains("Skins")) // check fi the osu folder with the skin is selected
                 {
                     myViewModel.OsuFolder = objDialog.SelectedPath;
                 }

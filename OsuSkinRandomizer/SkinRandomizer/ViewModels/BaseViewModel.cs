@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SkinRandomizer.ViewModels
 {
+    /// <summary>
+    /// the base class of the viewmodel, just knows how to trigger the propertychanged event in binding
+    /// </summary>
     public class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

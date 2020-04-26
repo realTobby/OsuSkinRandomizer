@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SkinRandomizer.Logic
 {
+    /// <summary>
+    /// used to handle config stuff, dont know yet if i want to keep it
+    /// </summary>
     public class SaveHandler
     {
         private string OsuDirectory = "";

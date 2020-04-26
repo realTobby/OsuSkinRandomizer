@@ -7,6 +7,9 @@ using System.Windows.Media.Imaging;
 
 namespace SkinRandomizer.ViewModels
 {
+    /// <summary>
+    ///  the binding base of the ui, inherints from the BaseViewModel so it can trigger the event changed
+    /// </summary>
     public class ViewModel : BaseViewModel
     {
         private string _windowTitle = "OsuSkinRandomizer v2.0";

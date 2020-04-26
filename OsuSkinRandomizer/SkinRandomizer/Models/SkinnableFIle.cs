@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SkinRandomizer.Models
 {
+    /// <summary>
+    /// Helper DataModel for collecting data and stuff
+    /// </summary>
     public class SkinnableFile
     {
         public string skinName = "";

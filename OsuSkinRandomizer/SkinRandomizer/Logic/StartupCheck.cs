@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SkinRandomizer.Logic
 { 
-
+    /// <summary>
+    /// check for the osu directory in the registry, if not found the user can manually find/select the osu folder in the ui
+    /// </summary>
     public class StartupCheck
     {
         private string osuFolder = "NOTFOUND";
