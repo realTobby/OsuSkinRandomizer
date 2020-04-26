@@ -3,6 +3,7 @@ using SkinRandomizer.ViewModels;
 using System.Windows;
 using SkinRandomizer.Logic.Generators;
 using SkinRandomizer.Interfaces;
+using System.Windows.Forms;
 
 namespace SkinRandomizer
 {
@@ -65,8 +66,26 @@ namespace SkinRandomizer
 
             PreviewGenerate pg = new PreviewGenerate();
             myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
-            
-            MessageBox.Show("Your skin has been successfully created!");
+
+            System.Windows.MessageBox.Show("Your skin has been successfully created!");
+        }
+
+        private void btn_osu_folder_find_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog objDialog = new FolderBrowserDialog();
+            objDialog.Description = "Beschreibung";
+            objDialog.SelectedPath = @"C:\";       // Vorgabe Pfad (und danach der gewählte Pfad)
+            if (objDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if(objDialog.SelectedPath.Contains("Skins"))
+                {
+                    myViewModel.OsuFolder = objDialog.SelectedPath;
+                }
+                else
+                {
+                    myViewModel.OsuFolder = objDialog.SelectedPath + "\\Skins";
+                }
+            }
         }
     }
 }

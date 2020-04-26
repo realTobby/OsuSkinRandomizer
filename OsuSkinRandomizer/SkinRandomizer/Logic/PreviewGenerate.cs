@@ -16,17 +16,24 @@ namespace SkinRandomizer.Logic
         {
             // neue bitmap erstellen
             Bitmap preview = new Bitmap("Assets\\previewBackground.png");
-            Bitmap cursor = new Bitmap("Assets\\previewBackground.png");
+            Bitmap cursor = new Bitmap("Assets\\void.png");
             if(System.IO.File.Exists(skinFolder + "\\cursor@2x.png"))
             {
                 cursor = new Bitmap(skinFolder + "\\cursor@2x.png");
             }
                 
-
-            Bitmap hitcircle = new Bitmap("Assets\\previewBackground.png");
+            Bitmap hitcircle = new Bitmap("Assets\\void.png");
             if (System.IO.File.Exists(skinFolder + "\\hitcircle@2x2.png"))
             {
                 hitcircle = new Bitmap(skinFolder + "\\hitcircle@2x2.png");
+            }
+
+
+            List<Bitmap> comboImages = new List<Bitmap>();
+            for(int i = 0; i < 9; i++)
+            {
+                if(System.IO.File.Exists(skinFolder + "\\combo-" + i + ".png"))
+                    comboImages.Add(new Bitmap(skinFolder + "\\combo-" + i + ".png"));
             }
 
 
@@ -34,7 +41,23 @@ namespace SkinRandomizer.Logic
             {
                 g.DrawImage(hitcircle, cursor.Width + 15, 0, hitcircle.Width, hitcircle.Height);
                 g.DrawImage(cursor, 0, 0, cursor.Width, cursor.Height);
+
+                for (int i = 0; i < 9; i++)
+                {
+                    if(comboImages.Count() > i)
+                    {
+                        g.DrawImage(comboImages[i], 128 + i * comboImages[i].Width, 256, comboImages[i].Width, comboImages[i].Height);
+                        comboImages[i].Dispose();
+                    }
+                    
+                }
+                
+
             }
+
+
+
+            comboImages.Clear();
 
             cursor.Dispose();
             hitcircle.Dispose();

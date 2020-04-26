@@ -15,9 +15,10 @@
 
         <Grid x:Name="upperGrid" Grid.Row="0">
             <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Stretch">
-                <Button Content="Change OSU directory" Margin="10,10,10,10"/>
+                <Button x:Name="btn_osu_folder_find" Content="Change OSU directory" Margin="10,10,10,10" Click="btn_osu_folder_find_Click"/>
                 <TextBox Text="{Binding OsuFolder}" Margin="0,10,0,10" HorizontalAlignment="Stretch"/>
-                <TextBox Text="{Binding CreationName}" Width="200" Margin="10,10,0,10"/>
+                <Label Content="Your skin creation name:" Margin="10,5,0,0"/>
+                <TextBox Text="{Binding CreationName}" Width="200" Margin="0,10,0,10"/>
             </StackPanel>
         </Grid>
 
