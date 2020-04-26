@@ -4,7 +4,7 @@ Fun tool that will generate a fresh osu skin, out of random parts from all your 
 Made in C# with WPF
 
 Application:
-![Banner](https://github.com/realTobby/OsuSkinRandomizer/blob/master/pictures_small.png)
+![Banner](https://github.com/realTobby/OsuSkinRandomizer/blob/master/pictures.png)
 
 
 See it in action: https://www.youtube.com/watch?v=PbwMkmIPBDU (Big thanks to KoiFishu!)
