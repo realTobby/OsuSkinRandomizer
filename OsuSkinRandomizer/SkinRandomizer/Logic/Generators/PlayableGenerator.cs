@@ -37,7 +37,7 @@ namespace SkinRandomizer.Logic.Generators
                     if (installedFile.skinnableName.ToLower().Contains("@2x"))
                     {
                         // higher resolution
-                        List<SkinnableFile> animation = allFoundFiles.Where(x => x.skinnableName.Contains(fileName) && x.skinName == installedFile.skinName && x.skinnableName.ToLower().Contains("@2x")).ToList();
+                        List<SkinnableFile> animation = allFoundFiles.Where(x => x.skinnableName.Contains(fileName) && x.skinName == installedFile.skinName && x.skinnableName.ToLower().Contains("@2x") && x.skinnableName.ToLower().Contains("-")).ToList();
                         if (animation.Count() != 0)
                         {
                             newSkin.AddRange(animation);
