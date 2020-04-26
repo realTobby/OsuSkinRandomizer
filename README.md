@@ -4,4 +4,4 @@ Fun tool that will generate a fresh osu skin, out of random parts from all your 
 ![Banner](https://github.com/realTobby/OsuSkinRandomizer/blob/master/main_new.PNG)
 
 
-Thanks to KoiFishu for playing this on Stream!
+Thanks to KoiFishu for using this on Stream!
