@@ -11,5 +11,6 @@ namespace SkinRandomizer.Models
         public string skinName = "";
         public string skinnableName = "";
         public string extension = "";
+        public string overrideSkinnable = "";
     }
 }

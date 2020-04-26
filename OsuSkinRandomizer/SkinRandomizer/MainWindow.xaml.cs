@@ -13,7 +13,7 @@ namespace SkinRandomizer
     {
         private ViewModel myViewModel;
         private SaveHandler sh = new SaveHandler();
-        private IGenerator sg;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -37,42 +37,36 @@ namespace SkinRandomizer
                     myViewModel.OsuFolder = path;
                     sh.Save(myViewModel.OsuFolder);
                 }
-            
             }
-
-
-            
-            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btn_generate_Click(object sender, RoutedEventArgs e)
         {
-            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\EpicRandomSkin"))
+
+            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\" + myViewModel.CreationName))
             {
-                MessageBox.Show("currently, you need to delete the old random skin before you create a new one :/");
+                System.IO.Directory.Delete(myViewModel.OsuFolder + @"\" + myViewModel.CreationName, true);
             }
-            else
+            System.IO.Directory.CreateDirectory(myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+
+            IGenerator sg = new BaseGenerator();
+
+            if (myViewModel.IsCorruptionMode == true)
+            {
+                sg = new CorruptionGenerator();
+            }
+            if (myViewModel.IsNormalRandomMode == true)
             {
                 sg = new TotalRandomGenerator();
-                sg.Init(myViewModel.OsuFolder, "EpicRandomSkin");
-                sg.Generate();
-                MessageBox.Show("New skin created! its probably hot garbage :/");
             }
-        }
 
-        private void btn_playable_debug_Click(object sender, RoutedEventArgs e)
-        {
-            if (System.IO.Directory.Exists(myViewModel.OsuFolder + @"\EpicRandomSkin"))
-            {
-                MessageBox.Show("currently, you need to delete the old random skin before you create a new one :/");
-            }
-            else
-            {
-                sg = new PlayableGenerator();
-                sg.Init(myViewModel.OsuFolder, "EpicRandomSkin");
-                sg.Generate();
-                MessageBox.Show("New skin created! its probably hot garbage :/");
-            }
+            sg.Init(myViewModel.OsuFolder, myViewModel.CreationName);
+            sg.Generate();
+
+            PreviewGenerate pg = new PreviewGenerate();
+            myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+            
+            MessageBox.Show("Your skin has been successfully created!");
         }
     }
 }

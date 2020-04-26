@@ -12,9 +12,11 @@ namespace SkinRandomizer.Logic.Generators
 {
     public class TotalRandomGenerator : BaseGenerator
     {
+        Random rnd = new Random();
+
         public override void Generate()
         {
-            Random rnd = new Random();
+            
             List<string> installedSkins = System.IO.Directory.GetDirectories(base.pathToOsuSkinFolder).ToList();
             List<SkinnableFile> allFoundFiles = new List<SkinnableFile>();
 

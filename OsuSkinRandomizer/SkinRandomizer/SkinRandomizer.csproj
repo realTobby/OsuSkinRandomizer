@@ -76,7 +76,8 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IGenerator.cs" />
     <Compile Include="Logic\Generators\BaseGenerator.cs" />
-    <Compile Include="Logic\Generators\PlayableGenerator.cs" />
+    <Compile Include="Logic\Generators\CorruptionGenerator.cs" />
+    <Compile Include="Logic\PreviewGenerate.cs" />
     <Compile Include="Logic\SaveHandler.cs" />
     <Compile Include="Logic\Generators\TotalRandomGenerator.cs" />
     <Compile Include="Logic\StartupCheck.cs" />
@@ -138,7 +139,9 @@
     <Folder Include="Forms\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\previewBackground.png" />
+    <Content Include="Assets\previewBackground.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="OsuSkinnables\skinnableCatch.txt">
