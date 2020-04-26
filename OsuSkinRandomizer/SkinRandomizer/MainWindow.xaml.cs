@@ -4,13 +4,16 @@ using System.Windows;
 using SkinRandomizer.Logic.Generators;
 using SkinRandomizer.Interfaces;
 using System.Windows.Forms;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using System.Threading.Tasks;
 
 namespace SkinRandomizer
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         private ViewModel myViewModel;
         private SaveHandler SAVE_HANDLER = new SaveHandler();
@@ -41,10 +44,12 @@ namespace SkinRandomizer
             }
         }
 
-        private void btn_generate_Click(object sender, RoutedEventArgs e)
+        private async void btn_generate_Click(object sender, RoutedEventArgs e)
         {
+            ProgressDialogController controllerWait = await this.ShowProgressAsync("Please wait...", "Generating OSU skin with the selected options...", false, null);
+            controllerWait.SetIndeterminate();
 
-            if(System.IO.Directory.Exists(myViewModel.OsuFolder + @"\" + myViewModel.CreationName)) // check if the skin folder with the creation name exists
+            if (System.IO.Directory.Exists(myViewModel.OsuFolder + @"\" + myViewModel.CreationName)) // check if the skin folder with the creation name exists
             {
                 System.IO.Directory.Delete(myViewModel.OsuFolder + @"\" + myViewModel.CreationName, true); // delete everything in it and the folder 
             }
@@ -62,12 +67,18 @@ namespace SkinRandomizer
             }
 
             sg.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
-            sg.Generate(); // generate the skin
 
-            PreviewGenerate pg = new PreviewGenerate(); 
+            await Task.Run(() =>
+            {
+                
+                sg.Generate(); // generate the skin
+
+                
+            });
+            PreviewGenerate pg = new PreviewGenerate();
             myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin
-
-            System.Windows.MessageBox.Show("Your skin has been successfully created!"); // done
+            await controllerWait.CloseAsync();
+            var controllerMessage = await this.ShowMessageAsync("Done.", "The Random Skin was successfully created!", MessageDialogStyle.Affirmative);
         }
 
         private void btn_osu_folder_find_Click(object sender, RoutedEventArgs e)
