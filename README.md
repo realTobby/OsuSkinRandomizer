@@ -7,7 +7,10 @@ Application:
 ![Banner](https://github.com/realTobby/OsuSkinRandomizer/blob/master/pictures_small.png)
 
 
+See it in action: https://www.youtube.com/watch?v=PbwMkmIPBDU
 
-
+Caution: The more skins you have installed, the longer it will take to generate the random skin!
 
 I AM NOT RESPONSIBLE FOR ANYTHING RELATED TO YOUR OSU DIRECTORY. HAVE A BACKUP IF ITS IMPORTANT TO YOU. IN MY TESTS NOTHING HAPPENED, BUT JUST TO BE SAFE!
+
+
