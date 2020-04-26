@@ -6,7 +6,7 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:SkinRandomizer"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="575" Width="800">
+        Title="{Binding WindowTitle}" Height="575" Width="800" ShowIconOnTitleBar="True" ShowTitleBar="True" Icon="icon.ico">
     <Grid>
 
         <Grid.RowDefinitions>
