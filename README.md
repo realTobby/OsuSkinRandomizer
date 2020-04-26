@@ -7,7 +7,7 @@ Application:
 ![Banner](https://github.com/realTobby/OsuSkinRandomizer/blob/master/pictures_small.png)
 
 
-See it in action: https://www.youtube.com/watch?v=PbwMkmIPBDU
+See it in action: https://www.youtube.com/watch?v=PbwMkmIPBDU (Big thanks to KoiFishu!)
 
 Caution: The more skins you have installed, the longer it will take to generate the random skin!
 
