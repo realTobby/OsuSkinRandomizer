@@ -14,35 +14,17 @@ namespace SkinRandomizer.Logic.Generators
         /// </summary>
         public override void Generate()
         {
-            Random rnd = new Random();
-            List<string> installedSkins = System.IO.Directory.GetDirectories(base.pathToOsuSkinFolder).ToList(); // get all installed skins
-            List<SkinnableFile> allFoundFiles = new List<SkinnableFile>();  // prepare list for all installed files
-
-            foreach (string skinFolder in installedSkins) // look through the installed skins
-            {
-                var fileInSkinFolder = System.IO.Directory.GetFiles(skinFolder); 
-                foreach (string file in fileInSkinFolder) // look through the installed files inside the skin
-                {
-                    SkinnableFile newFile = new SkinnableFile();
-                    newFile.extension = System.IO.Path.GetExtension(file);
-                    newFile.skinnableName = System.IO.Path.GetFileNameWithoutExtension(file);
-                    newFile.skinName = System.IO.Path.GetFullPath(skinFolder).Split('\\').Last();
-                    allFoundFiles.Add(newFile); // add the file to the installede files list
-                }
-            }
-
             List<SkinnableFile> newSkin = new List<SkinnableFile>();
-            foreach (SkinnableFile installedFile in allFoundFiles) // go over every installed file
+            foreach (SkinnableFile installedFile in base.relevantFiles) // go over every installed file
             {
                 if (!newSkin.Exists(x => x.skinnableName == installedFile.skinnableName)) // check if the skinnable element is already there
                 {
                     // if not found
-                    List<SkinnableFile> skinnableGroup = allFoundFiles.Where(x => x.extension == installedFile.extension).ToList(); // look for matches in extension ==> dont care for anything else
+                    List<SkinnableFile> skinnableGroup = base.relevantFiles.Where(x => x.extension == installedFile.extension).ToList(); // look for matches in extension ==> dont care for anything else
                     SkinnableFile corruptedFile = new SkinnableFile();
                     corruptedFile = skinnableGroup[rnd.Next(0, skinnableGroup.Count)];
                     corruptedFile.overrideSkinnable = installedFile.skinnableName;
                     newSkin.Add(corruptedFile); // add file to result skin
-
                 }
             }
 

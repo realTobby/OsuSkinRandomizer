@@ -90,10 +90,8 @@ namespace SkinRandomizer
 
             await Task.Run(() =>
             {
-                
-                sg.Generate(); // generate the skin
-
-                
+                sg.GatherFiles(); // get files :)
+                sg.Generate(); // generate the skin :)
             });
             PreviewGenerate pg = new PreviewGenerate();
             myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin

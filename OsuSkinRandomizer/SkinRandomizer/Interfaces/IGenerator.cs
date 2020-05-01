@@ -13,6 +13,7 @@ namespace SkinRandomizer.Interfaces
     {
         void Init(string path, string skinname);
         void Generate();
-        
+
+        void GatherFiles();
     }
 }
