@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Threading.Tasks;
+using System;
 
 namespace SkinRandomizer
 {
@@ -22,19 +23,33 @@ namespace SkinRandomizer
         {
             InitializeComponent();
 
+            //#if DEBUG ==> PLACE A TEMPLATE SKIN INSDIE YOUR OSU SKIN FOLDER AND REDIRECT THE DIRECTORY TO GET BASE DATA => ALL SKINNABLE FILES THERE SHOULD BE
+            //            BaseDataCreator bdc = new BaseDataCreator();
+            //            bdc.StartReading();
+            //            bdc.CreateBaseDataFile();
+            //            Console.WriteLine("[DEBUG]: Base Data File created!");
+            //#endif
+
+
             myViewModel = new ViewModel();
             this.DataContext = myViewModel;
             this.Show();
 
             SAVE_HANDLER.Load();
-            
-            if(SAVE_HANDLER.IsDirectoryAvailable == false) // check if the config has the directory in it
+
+            CheckOsuFolder();
+        }
+
+        private async void  CheckOsuFolder()
+        {
+            if (SAVE_HANDLER.IsDirectoryAvailable == false) // check if the config has the directory in it
             {
                 StartupCheck sc = new StartupCheck();
                 string path = sc.GetDirectoryString();
-                if(path == "NOTFOUND")
+                if (path == "NOTFOUND")
                 {
                     myViewModel.OsuFolder = "Osu Folder not found...please specify manually!";
+                    var controllerMessage = await this.ShowMessageAsync("Oops...", "Could not find your osu directory :( Please specify it manually!", MessageDialogStyle.Affirmative);
                 }
                 else
                 {
@@ -46,6 +61,11 @@ namespace SkinRandomizer
 
         private async void btn_generate_Click(object sender, RoutedEventArgs e)
         {
+            if(!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinnables.base"))
+            {
+                var oopsController = await this.ShowMessageAsync("Oops...", "Cant find the 'baseDataSkinnables.base' file...please redownload the application! Without this file it wont work :( Contact the DEVs on GitHub maybe? :)", MessageDialogStyle.Affirmative);
+            }
+
             ProgressDialogController controllerWait = await this.ShowProgressAsync("Please wait...", "Generating OSU skin with the selected options...", false, null);
             controllerWait.SetIndeterminate();
 
@@ -59,11 +79,11 @@ namespace SkinRandomizer
 
             if (myViewModel.IsCorruptionMode == true)
             {
-                sg = new CorruptionGenerator(); // specify it
+                sg = new CorruptionGenerator(); // specify generator
             }
             if (myViewModel.IsNormalRandomMode == true)
             {
-                sg = new TotalRandomGenerator(); // specify it
+                sg = new TotalRandomGenerator(); // specify generator
             }
 
             sg.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
@@ -78,7 +98,7 @@ namespace SkinRandomizer
             PreviewGenerate pg = new PreviewGenerate();
             myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin
             await controllerWait.CloseAsync();
-            var controllerMessage = await this.ShowMessageAsync("Done.", "The Random Skin was successfully created!", MessageDialogStyle.Affirmative);
+            var doneController = await this.ShowMessageAsync("Done.", "The Random Skin was successfully created!", MessageDialogStyle.Affirmative);
         }
 
         private void btn_osu_folder_find_Click(object sender, RoutedEventArgs e)

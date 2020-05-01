@@ -12,49 +12,51 @@ namespace SkinRandomizer.Logic.Generators
 {
     public class TotalRandomGenerator : BaseGenerator
     {
-        Random rnd = new Random();
-
         /// <summary>
-        /// TotalRandomGenerator creates a playable skin, which looks into extension and skinnable element name, so the elements align and are the same
+        /// TotalRandomGenerator creates a playable skin, which sticks to a list of skinnable elements and searches for these, so they skin elements align
         /// </summary>
         public override void Generate()
         {
             
-            List<string> installedSkins = System.IO.Directory.GetDirectories(base.pathToOsuSkinFolder).ToList();
-            List<SkinnableFile> allFoundFiles = new List<SkinnableFile>();
+            List<string> installedSkins = System.IO.Directory.GetDirectories(base.pathToOsuSkinFolder).ToList(); // skin paths => all installed skin folders
+            List<SkinnableFile> relevantFiles = new List<SkinnableFile>(); // ==> wasteful resources => better idea with the skinnables.base file i just created
 
-            foreach(string skinFolder in installedSkins) // look over the installed skins
+            // get skinnables file
+            string skinnableBase = @"Assets\SkinnableData\baseDataSkinnables.base";
+            // read it
+            List<string> EverySkinnable = System.IO.File.ReadAllLines(skinnableBase).ToList();
+            // go over list
+            foreach(string skinnableBaseName in EverySkinnable)
             {
-                var fileInSkinFolder = System.IO.Directory.GetFiles(skinFolder);
-                foreach(string file in fileInSkinFolder) // look over the installed files inside the skin
+                List<string> matchingFiles = new List<string>();
+                foreach(string installedSkin in installedSkins) // go over installed skins
                 {
-                    SkinnableFile newFile = new SkinnableFile();
-                    newFile.extension = System.IO.Path.GetExtension(file);
-                    newFile.skinnableName = System.IO.Path.GetFileNameWithoutExtension(file);
-                    newFile.skinName = System.IO.Path.GetFullPath(skinFolder).Split('\\').Last();
-                    allFoundFiles.Add(newFile); // add the file to the installed skinnable file list
+                    string foundMatch = System.IO.Directory.GetFiles(installedSkin, skinnableBaseName, System.IO.SearchOption.TopDirectoryOnly).FirstOrDefault(); // check for file
+                    if(foundMatch != null)
+                        matchingFiles.Add(foundMatch);
                 }
-            }
-
-            List<SkinnableFile> newSkin = new List<SkinnableFile>();
-            foreach(SkinnableFile installedFile in allFoundFiles) // go over every installed file
-            {
-                if(!newSkin.Exists(x=>x.skinnableName == installedFile.skinnableName)) // check if the skinnable element is already there
+                if(matchingFiles.Count() > 0)
                 {
-                    // if not found
-                    List<SkinnableFile> skinnableGroup = allFoundFiles.Where(x => x.skinnableName == installedFile.skinnableName && x.extension == installedFile.extension).ToList();
-                    newSkin.Add(skinnableGroup[rnd.Next(0, skinnableGroup.Count)]); // add a random skinnable element to the result skin lsit
+                    string filePath = matchingFiles[rnd.Next(0, matchingFiles.Count())];
+                    string[] skinFolderSegments = filePath.Split('\\');
+                    if (skinFolderSegments[skinFolderSegments.Count() - 3] == "Skins") // the file is actually in the skin folder and not in a folder below it
+                    {
+                        string skinName = skinFolderSegments[skinFolderSegments.Count() - 2];
+                        SkinnableFile newFile = new SkinnableFile();
+                        newFile.extension = System.IO.Path.GetExtension(filePath);
+                        newFile.skinnableName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                        newFile.skinName = skinName;
+                        relevantFiles.Add(newFile); // add the file to the installed skinnable file list
+                    }
                 }
             }
 
             string resultSkinDirectory = base.pathToOsuSkinFolder + @"\" + base.skinResultName + @"\";
-
-            foreach(SkinnableFile file in newSkin) // go over the result skin list and copy everys file over
+            foreach (SkinnableFile file in relevantFiles) // go over the result skin list and copy everys file over
             {
-
                 string sourcePath = base.pathToOsuSkinFolder + @"\" + file.skinName + @"\" + file.skinnableName + file.extension;
-                string targetPath = resultSkinDirectory + file.skinnableName +  file.extension;
-                if(!System.IO.File.Exists(targetPath))
+                string targetPath = resultSkinDirectory + file.skinnableName + file.extension;
+                if (!System.IO.File.Exists(targetPath))
                 {
                     System.IO.File.Copy(sourcePath, targetPath);
                 }

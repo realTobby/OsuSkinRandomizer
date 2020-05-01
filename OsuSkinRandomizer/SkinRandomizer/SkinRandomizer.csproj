@@ -100,8 +100,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interfaces\IGenerator.cs" />
+    <Compile Include="Logic\BaseDataCreator.cs" />
     <Compile Include="Logic\Generators\BaseGenerator.cs" />
     <Compile Include="Logic\Generators\CorruptionGenerator.cs" />
+    <Compile Include="Logic\MagicalINI.cs" />
     <Compile Include="Logic\PreviewGenerate.cs" />
     <Compile Include="Logic\SaveHandler.cs" />
     <Compile Include="Logic\Generators\TotalRandomGenerator.cs" />
@@ -148,6 +150,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Content Include="Assets\SkinnableData\baseDataSkinnables.base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

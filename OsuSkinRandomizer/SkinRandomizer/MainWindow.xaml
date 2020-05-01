@@ -6,7 +6,7 @@
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:SkinRandomizer"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="575" Width="800" ShowIconOnTitleBar="True" ShowTitleBar="True" Icon="icon.ico">
+        Title="{Binding WindowTitle}" Height="200" Width="800" ShowIconOnTitleBar="True" ShowTitleBar="True" Icon="icon.ico">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -25,18 +25,11 @@
 
         <Grid x:Name="lowerGrid" Grid.Row="1">
             <StackPanel>
-                <CheckBox IsChecked="{Binding IsNormalRandomMode}" Content="Normal Random Mode (most playable)"/>
-                <CheckBox IsChecked="{Binding IsCorruptionMode}" Content="Corruption Mode (probably unplayable)"/>
+                <CheckBox IsChecked="{Binding IsNormalRandomMode}" Content="Normal Random Mode (most playable)" Margin="10,10,0,0"/>
+                <CheckBox IsChecked="{Binding IsCorruptionMode}" Content="Corruption Mode (highly unplayable, also epilepsy warning)" Margin="10,10,0,0"/>
 
-                <Button x:Name="btn_generate" Content="Generate Skin" Click="btn_generate_Click"/>
-
-                <Image Source="{Binding ImagePreview}" Stretch="Fill" Margin="10"/>
-
+                <Button x:Name="btn_generate" Content="Generate Skin" Click="btn_generate_Click" Margin="30,10,30,0"/>
             </StackPanel>
-            
-
         </Grid>
-        
-        
     </Grid>
 </Controls:MetroWindow>
