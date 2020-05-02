@@ -12,12 +12,26 @@ namespace SkinRandomizer.ViewModels
     /// </summary>
     public class ViewModel : BaseViewModel
     {
-        private string _windowTitle = "OsuSkinRandomizer v2.0";
+        private string version = "2.1";
+        public string Version
+        {
+            get
+            {
+                return version;
+            }
+            set
+            {
+                version = value;
+                base.OnPropertyChanged(nameof(Version));
+            }
+        }
+
+        private string _windowTitle = "OsuSkinRandomizer v";
         public string WindowTitle
         {
             get 
             { 
-                return _windowTitle;
+                return _windowTitle + version;
             }
             set 
             {

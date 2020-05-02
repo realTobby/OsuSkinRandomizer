@@ -25,7 +25,7 @@ namespace SkinRandomizer
 
             //#if DEBUG ==> PLACE A TEMPLATE SKIN INSDIE YOUR OSU SKIN FOLDER AND REDIRECT THE DIRECTORY TO GET BASE DATA => ALL SKINNABLE FILES THERE SHOULD BE
             //            BaseDataCreator bdc = new BaseDataCreator();
-            //            bdc.StartReading();
+            //            bdc.StartReading(@"D:\Spiele\osu!\Skins\Template");
             //            bdc.CreateBaseDataFile();
             //            Console.WriteLine("[DEBUG]: Base Data File created!");
             //#endif
@@ -61,9 +61,14 @@ namespace SkinRandomizer
 
         private async void btn_generate_Click(object sender, RoutedEventArgs e)
         {
-            if(!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinnables.base"))
+            if (!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinnables.base"))
             {
                 var oopsController = await this.ShowMessageAsync("Oops...", "Cant find the 'baseDataSkinnables.base' file...please redownload the application! Without this file it wont work :( Contact the DEVs on GitHub maybe? :)", MessageDialogStyle.Affirmative);
+            }
+
+            if (!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinINI.base"))
+            {
+                var oopsController = await this.ShowMessageAsync("Oops...", "Cant find the 'baseDataSkinINI.base' file...please redownload the application! Without this file it wont work :( Contact the DEVs on GitHub maybe? :)", MessageDialogStyle.Affirmative);
             }
 
             ProgressDialogController controllerWait = await this.ShowProgressAsync("Please wait...", "Generating OSU skin with the selected options...", false, null);
@@ -75,23 +80,30 @@ namespace SkinRandomizer
             }
             System.IO.Directory.CreateDirectory(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create it
 
-            IGenerator sg = new BaseGenerator(); // create a generic base generator
-
-            if (myViewModel.IsCorruptionMode == true)
-            {
-                sg = new CorruptionGenerator(); // specify generator
-            }
-            if (myViewModel.IsNormalRandomMode == true)
-            {
-                sg = new TotalRandomGenerator(); // specify generator
-            }
-
-            sg.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
-
             await Task.Run(() =>
             {
-                sg.GatherFiles(); // get files :)
-                sg.Generate(); // generate the skin :)
+                IGenerator skinelementsstuff = new BaseGenerator(); // create a generic base generator
+
+                MagicalINI inistuff = new MagicalINI(myViewModel.Version);
+                inistuff.OsuSkinFolder = myViewModel.OsuFolder;
+                inistuff.SkinName = myViewModel.CreationName;
+                if (myViewModel.IsCorruptionMode == true)
+                {
+                    skinelementsstuff = new CorruptionGenerator(); // specify generator
+                    inistuff.CreateSkinINI(INIMagic.Corrupted);
+                }
+                if (myViewModel.IsNormalRandomMode == true)
+                {
+                    skinelementsstuff = new TotalRandomGenerator(); // specify generator
+                    inistuff.CreateSkinINI(INIMagic.Random);
+                }
+
+                CreditGiver cg = new CreditGiver(inistuff.GetCredits(), myViewModel.Version, myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+                cg.CreateCreditsFile();
+
+                skinelementsstuff.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
+                skinelementsstuff.GatherFiles(); // get files :)
+                skinelementsstuff.Generate(); // generate the skin :)
             });
             PreviewGenerate pg = new PreviewGenerate();
             myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin

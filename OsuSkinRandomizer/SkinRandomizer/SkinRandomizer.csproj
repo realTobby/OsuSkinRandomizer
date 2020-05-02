@@ -101,6 +101,7 @@
     </ApplicationDefinition>
     <Compile Include="Interfaces\IGenerator.cs" />
     <Compile Include="Logic\BaseDataCreator.cs" />
+    <Compile Include="Logic\CreditGiver.cs" />
     <Compile Include="Logic\Generators\BaseGenerator.cs" />
     <Compile Include="Logic\Generators\CorruptionGenerator.cs" />
     <Compile Include="Logic\MagicalINI.cs" />
@@ -108,6 +109,8 @@
     <Compile Include="Logic\SaveHandler.cs" />
     <Compile Include="Logic\Generators\TotalRandomGenerator.cs" />
     <Compile Include="Logic\StartupCheck.cs" />
+    <Compile Include="Models\INIFileModel.cs" />
+    <Compile Include="Models\SkINIOptionModel.cs" />
     <Compile Include="Models\SkinnableFile.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -151,6 +154,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Content Include="Assets\SkinnableData\baseDataSkinnables.base">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\SkinnableData\baseDataSkinINI.base">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />

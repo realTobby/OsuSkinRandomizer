@@ -12,6 +12,13 @@ namespace SkinRandomizer.Logic.Generators
 {
     public class TotalRandomGenerator : BaseGenerator
     {
+        private List<string> credit = new List<string>();
+
+        public List<string> GetCredits()
+        {
+            return credit;
+        }
+
         /// <summary>
         /// TotalRandomGenerator creates a playable skin, which sticks to a list of skinnable elements and searches for these, so they skin elements align
         /// </summary>

@@ -10,17 +10,9 @@ namespace SkinRandomizer.Logic
     {
         List<string> filenamesWithExtensions = new List<string>();
 
-        public void StartReading()
+        public void StartReading(string path)
         {
-            string path = @"D:\Spiele\osu!\Skins\Template";
-
-
-
             filenamesWithExtensions = System.IO.Directory.GetFiles(path).ToList();
-
-
-
-
         }
 
 
@@ -38,6 +30,14 @@ namespace SkinRandomizer.Logic
             }
 
             System.IO.File.WriteAllText(filename, fileContent);
+
+        }
+
+        public void ConvertINI(string path)
+        {
+            string filename = "baseDataSkinINI.base";
+
+            System.IO.File.Copy(path, filename);
 
         }
     }
