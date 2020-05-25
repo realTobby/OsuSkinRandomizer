@@ -95,39 +95,50 @@ namespace SkinRandomizer
 
             await Task.Run(() =>
             {
-                myLogger.AddLoggerLine("starting to generate skin...", Severity.Information);
-
-                IGenerator skinelementsstuff = new BaseGenerator(); // create a generic base generator
-
-                MagicalINI inistuff = new MagicalINI(myViewModel.Version);
-                myLogger.AddLoggerLine("setting ini file...", Severity.Information);
-                inistuff.OsuSkinFolder = myViewModel.OsuFolder;
-                inistuff.SkinName = myViewModel.CreationName;
-                if (myViewModel.IsCorruptionMode == true)
+                try
                 {
-                    myLogger.AddLoggerLine("corruption mode generator", Severity.Information);
-                    skinelementsstuff = new CorruptionGenerator(); // specify generator
-                    inistuff.CreateSkinINI(INIMagic.Corrupted);
-                }
-                if (myViewModel.IsNormalRandomMode == true)
+                    myLogger.AddLoggerLine("starting to generate skin...", Severity.Information);
+
+                    IGenerator skinelementsstuff = new BaseGenerator(); // create a generic base generator
+
+                    MagicalINI inistuff = new MagicalINI(myViewModel.Version);
+                    myLogger.AddLoggerLine("setting ini file...", Severity.Information);
+                    inistuff.OsuSkinFolder = myViewModel.OsuFolder;
+                    inistuff.SkinName = myViewModel.CreationName;
+                    if (myViewModel.IsCorruptionMode == true)
+                    {
+                        myLogger.AddLoggerLine("corruption mode generator", Severity.Information);
+                        skinelementsstuff = new CorruptionGenerator(); // specify generator
+                        inistuff.CreateSkinINI(INIMagic.Corrupted);
+                    }
+                    if (myViewModel.IsNormalRandomMode == true)
+                    {
+                        myLogger.AddLoggerLine("normal random generator", Severity.Information);
+                        skinelementsstuff = new TotalRandomGenerator(); // specify generator
+                        inistuff.CreateSkinINI(INIMagic.Random);
+                    }
+
+                    myLogger.AddLoggerLine("creating credits file", Severity.Information);
+                    CreditGiver cg = new CreditGiver(inistuff.GetCredits(), myViewModel.Version, myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+                    cg.CreateCreditsFile();
+
+                    skinelementsstuff.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
+                    myLogger.AddLoggerLine("skin generator init", Severity.Information);
+                    skinelementsstuff.GatherFiles(); // get files :)
+                    myLogger.AddLoggerLine("skin generator GatherFiles", Severity.Information);
+                    skinelementsstuff.Generate(); // generate the skin :)
+                    myLogger.AddLoggerLine("skin generator generate", Severity.Information);
+                }catch(Exception ex)
                 {
-                    myLogger.AddLoggerLine("normal random generator", Severity.Information);
-                    skinelementsstuff = new TotalRandomGenerator(); // specify generator
-                    inistuff.CreateSkinINI(INIMagic.Random);
+                    myLogger.AddLoggerLine("ran into exception: " + ex.Message, Severity.Error);
                 }
-
-                myLogger.AddLoggerLine("creating credits file", Severity.Information);
-                CreditGiver cg = new CreditGiver(inistuff.GetCredits(), myViewModel.Version, myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
-                cg.CreateCreditsFile();
-
-                skinelementsstuff.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
-                skinelementsstuff.GatherFiles(); // get files :)
-                skinelementsstuff.Generate(); // generate the skin :)
+                
             });
             //PreviewGenerate pg = new PreviewGenerate();
             //myViewModel.ImagePreview = pg.GenerateBitmap(myViewModel.OsuFolder + @"\" + myViewModel.CreationName); // create the preview of the generate skin
             await controllerWait.CloseAsync();
             var doneController = await this.ShowMessageAsync("Done.", "The Random Skin was successfully created!", MessageDialogStyle.Affirmative);
+            myLogger.AddLoggerLine("skin should be created...", Severity.Information);
         }
 
         private void btn_osu_folder_find_Click(object sender, RoutedEventArgs e)

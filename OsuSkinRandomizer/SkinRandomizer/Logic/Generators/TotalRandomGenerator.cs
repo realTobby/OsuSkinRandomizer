@@ -16,6 +16,11 @@ namespace SkinRandomizer.Logic.Generators
 
         private List<string> credit = new List<string>();
 
+        public TotalRandomGenerator()
+        {
+            myLogger.AddLoggerLine("totalrandomGenerator successfully initialized", Severity.Information);
+        }
+
         public List<string> GetCredits()
         {
             return credit;
