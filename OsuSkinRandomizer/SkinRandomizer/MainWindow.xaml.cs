@@ -109,18 +109,18 @@ namespace SkinRandomizer
                     {
                         myLogger.AddLoggerLine("corruption mode generator", Severity.Information);
                         skinelementsstuff = new CorruptionGenerator(); // specify generator
-                        inistuff.CreateSkinINI(INIMagic.Corrupted);
+                        //inistuff.CreateSkinINI(INIMagic.Corrupted);
                     }
                     if (myViewModel.IsNormalRandomMode == true)
                     {
                         myLogger.AddLoggerLine("normal random generator", Severity.Information);
                         skinelementsstuff = new TotalRandomGenerator(); // specify generator
-                        inistuff.CreateSkinINI(INIMagic.Random);
+                        //inistuff.CreateSkinINI(INIMagic.Random);
                     }
 
-                    myLogger.AddLoggerLine("creating credits file", Severity.Information);
-                    CreditGiver cg = new CreditGiver(inistuff.GetCredits(), myViewModel.Version, myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
-                    cg.CreateCreditsFile();
+                    //myLogger.AddLoggerLine("creating credits file", Severity.Information);
+                    //CreditGiver cg = new CreditGiver(inistuff.GetCredits(), myViewModel.Version, myViewModel.OsuFolder + @"\" + myViewModel.CreationName);
+                    //cg.CreateCreditsFile();
 
                     skinelementsstuff.Init(myViewModel.OsuFolder, myViewModel.CreationName); // init generstor with the directory info
                     myLogger.AddLoggerLine("skin generator init", Severity.Information);
