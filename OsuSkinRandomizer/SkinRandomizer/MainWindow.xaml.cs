@@ -16,13 +16,15 @@ namespace SkinRandomizer
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        private Logger myLogger = new Logger();
+
         private ViewModel myViewModel;
         private SaveHandler SAVE_HANDLER = new SaveHandler();
         
         public MainWindow()
         {
             InitializeComponent();
-
+            myLogger.AddLoggerLine("Startup application...", Severity.Information);
             //#if DEBUG ==> PLACE A TEMPLATE SKIN INSDIE YOUR OSU SKIN FOLDER AND REDIRECT THE DIRECTORY TO GET BASE DATA => ALL SKINNABLE FILES THERE SHOULD BE
             //            BaseDataCreator bdc = new BaseDataCreator();
             //            bdc.StartReading(@"D:\Spiele\osu!\Skins\Template");
@@ -42,6 +44,7 @@ namespace SkinRandomizer
 
         private async void  CheckOsuFolder()
         {
+            myLogger.AddLoggerLine("checking osu folder...", Severity.Information);
             if (SAVE_HANDLER.IsDirectoryAvailable == false) // check if the config has the directory in it
             {
                 StartupCheck sc = new StartupCheck();
@@ -61,13 +64,16 @@ namespace SkinRandomizer
 
         private async void btn_generate_Click(object sender, RoutedEventArgs e)
         {
+            myLogger.AddLoggerLine("starting generation...", Severity.Information);
             if (!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinnables.base"))
             {
+                myLogger.AddLoggerLine("couldnt find the baseDataSkinnables.base file", Severity.Error);
                 var oopsController = await this.ShowMessageAsync("Oops...", "Cant find the 'baseDataSkinnables.base' file...please redownload the application! Without this file it wont work :( Contact the DEVs on GitHub maybe? :)", MessageDialogStyle.Affirmative);
             }
 
             if (!System.IO.File.Exists(@"Assets\SkinnableData\baseDataSkinINI.base"))
             {
+                myLogger.AddLoggerLine("couldnt find the baseDataSkinINI.base file", Severity.Error);
                 var oopsController = await this.ShowMessageAsync("Oops...", "Cant find the 'baseDataSkinINI.base' file...please redownload the application! Without this file it wont work :( Contact the DEVs on GitHub maybe? :)", MessageDialogStyle.Affirmative);
             }
 

@@ -15,6 +15,7 @@ namespace SkinRandomizer.Logic.Generators
     /// </summary>
     public class BaseGenerator : IGenerator
     {
+        internal Logger myLogger = new Logger();
         internal Random rnd = new Random();
         internal string pathToOsuSkinFolder = "";
         internal string skinResultName = "";
@@ -26,6 +27,7 @@ namespace SkinRandomizer.Logic.Generators
         /// </summary>
         public virtual void Generate()
         {
+            myLogger.AddLoggerLine("no Generator set...", Severity.Error);
             throw new NotImplementedException();
         }
 
@@ -36,6 +38,7 @@ namespace SkinRandomizer.Logic.Generators
         /// <param name="skinname"></param>
         public virtual void Init(string path, string skinname)
         {
+            myLogger.AddLoggerLine("init generator", Severity.Information);
             pathToOsuSkinFolder = path;
             skinResultName = skinname;
             System.IO.Directory.CreateDirectory(path + @"\" + skinname);
@@ -43,6 +46,7 @@ namespace SkinRandomizer.Logic.Generators
 
         public void GatherFiles()
         {
+            myLogger.AddLoggerLine("reading files...", Severity.Information);
             List<string> installedSkins = System.IO.Directory.GetDirectories(pathToOsuSkinFolder).ToList(); // skin paths => all installed skin folders
             // get skinnables file
             string skinnableBase = @"Assets\SkinnableData\baseDataSkinnables.base";
@@ -51,6 +55,7 @@ namespace SkinRandomizer.Logic.Generators
             // go over list
             foreach (string skinnableBaseName in EverySkinnable)
             {
+                myLogger.AddLoggerLine("File: " + skinnableBaseName + " gathered (from installed)", Severity.Information);
                 List<string> matchingFiles = new List<string>();
                 foreach (string installedSkin in installedSkins) // go over installed skins
                 {

@@ -11,18 +11,22 @@ namespace SkinRandomizer.Logic
     /// </summary>
     public class SaveHandler
     {
+        private Logger myLogger = new Logger();
+
         private string OsuDirectory = "";
         public bool IsDirectoryAvailable = false;
 
         public void Save(string dir)
         {
+            myLogger.AddLoggerLine("saving config", Severity.Information);
             string txt = "OsuDir=" + OsuDirectory;
             System.IO.File.WriteAllText("config.cfg", txt);
         }
 
         public void Load()
         {
-            if(System.IO.File.Exists("config.cfg"))
+            myLogger.AddLoggerLine("loading config", Severity.Information);
+            if (System.IO.File.Exists("config.cfg"))
             {
                 string[] configLines = System.IO.File.ReadAllLines("config.cfg");
                 OsuDirectory = configLines[0].Replace("OsuDir=", string.Empty);
