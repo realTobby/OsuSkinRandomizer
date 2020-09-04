@@ -18,7 +18,7 @@ namespace SkinRandomizer.Logic
         }
 
         /// Code Credits: https://osu.ppy.sh/users/1404615 THANKS! Found your snippet in the Forum and changed it a bit :)
-        private string GetOsuDirectory()
+        public string GetOsuDirectory()
         {
             string keyName1 = @"HKEY_CLASSES_ROOT\osu\shell\open\command";
             string keyName2 = @"HKEY_CLASSES_ROOT\osu!\shell\open\command";

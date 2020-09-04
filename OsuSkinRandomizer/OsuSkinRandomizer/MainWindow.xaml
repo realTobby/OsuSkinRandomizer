@@ -1,0 +1,43 @@
+﻿<mah:MetroWindow  x:Class="OsuSkinRandomizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OsuSkinRandomizer"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="450" Width="800" >
+    <Grid>
+
+        <mah:MetroAnimatedTabControl>
+            <mah:MetroTabItem Header="Main">
+                <!-- MAIN TAB HERE -->
+                <TextBlock Text="menu 1"/>
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Skins">
+                <!-- SKIN TAB HERE -->
+                <ListView ItemsSource="{Binding InstalledSkins}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding SkinName}"/>
+                                <TextBlock Text=" by "/>
+                                <TextBlock Text="{Binding Author}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Create">
+                <!-- CREATE TAB HERE -->
+                <TextBlock Text="here you randomize the skins"/>
+            </mah:MetroTabItem>
+            <mah:MetroTabItem Header="Settings">
+                <!-- SETTINGS TAB HERE -->
+                <TextBlock Text="here you change settings of the app"/>
+            </mah:MetroTabItem>
+        </mah:MetroAnimatedTabControl>
+        
+        
+    </Grid>
+</mah:MetroWindow>
