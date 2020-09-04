@@ -6,11 +6,20 @@ using System.Threading.Tasks;
 
 namespace OsuSkinRandomizer.Models
 {
-    public class InstalledSkin
+    public class SkinInfo
     {
         public string Path { get; set; }
         public string SkinName { get; set; }
         public string Author { get; set; }
+
+        public SkinInfo()
+        {
+            Path = "";
+            SkinName = "EpicRandomSkin";
+            Author = "OsuSkinRandomizer";
+        }
+
+        public List<string> AvailableSkinElements = new List<string>();
 
     }
 }

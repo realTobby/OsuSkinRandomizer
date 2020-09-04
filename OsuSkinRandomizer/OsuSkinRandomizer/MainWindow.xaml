@@ -6,13 +6,16 @@
         xmlns:local="clr-namespace:OsuSkinRandomizer"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="450" Width="800" >
+        Title="{Binding WindowTitle}" Height="450" Width="800" ShowIconOnTitleBar="True" ShowTitleBar="True" Icon="icon.ico" >
     <Grid>
 
         <mah:MetroAnimatedTabControl>
-            <mah:MetroTabItem Header="Main">
-                <!-- MAIN TAB HERE -->
-                <TextBlock Text="menu 1"/>
+            <mah:MetroTabItem Header="Start">
+                <!-- START TAB HERE -->
+                <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Thanks for using the OsuSkinRandomizer, Happy randomizing :)"/>
+                    <Image Source="icon.ico" Width="100" Height="100" Margin="0,50,0,0" ToolTip="I am not a button, did you really click me?"/>
+                </StackPanel>
             </mah:MetroTabItem>
             <mah:MetroTabItem Header="Skins">
                 <!-- SKIN TAB HERE -->
@@ -21,20 +24,30 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding SkinName}"/>
-                                <TextBlock Text=" by "/>
+                                <TextBlock Text=" by"/>
                                 <TextBlock Text="{Binding Author}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </mah:MetroTabItem>
-            <mah:MetroTabItem Header="Create">
-                <!-- CREATE TAB HERE -->
-                <TextBlock Text="here you randomize the skins"/>
+            <mah:MetroTabItem Header="Randomize">
+                <!-- Randomize TAB HERE -->
+                <StackPanel>
+                    <TextBlock Text="Your Skin Name:"/>
+                    <TextBox x:Name="tbSkinName" Text="{Binding UserGeneratedSkin.SkinName}"/>
+                    <CheckBox Content="Interface" IsChecked="{Binding RandomizeInterface}"/>
+                    <CheckBox Content="Standard" IsChecked="{Binding RandomizeStandard}"/>
+                    <Button x:Name="btnGenerate" Content="Randomize!" Click="btnGenerate_Click"/>
+                </StackPanel>
             </mah:MetroTabItem>
             <mah:MetroTabItem Header="Settings">
                 <!-- SETTINGS TAB HERE -->
-                <TextBlock Text="here you change settings of the app"/>
+                <StackPanel>
+                    <TextBox x:Name="tbOsuSkinFolder" Text="{Binding OsuSkinFolder}"/>
+                    <Button x:Name="btnRefresh" Content="Refresh" ToolTip="Checks the installed skins in your Skin-Folder" Click="btnRefresh_Click"/>
+                    
+                </StackPanel>
             </mah:MetroTabItem>
         </mah:MetroAnimatedTabControl>
         

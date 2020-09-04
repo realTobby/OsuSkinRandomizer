@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls.Dialogs;
 using OsuSkinRandomizer.Logic;
 using OsuSkinRandomizer.Models;
 
@@ -23,30 +24,53 @@ namespace OsuSkinRandomizer
     public partial class MainWindow
     {
         public Randomize skinRandomizer; // used for randomizer logic => UI shouldnt have any logic
-        public Files fileLogic; // used for file processes
 
         public MainWindow()
         {
             InitializeComponent();
-            fileLogic = new Files();
             skinRandomizer = new Randomize();
             this.DataContext = skinRandomizer.UILayer;
 
-            OnUILoad();
+            Startup();
         }
 
-        public void OnUILoad()
+        public void Startup()
         {
-            // load cached file => check for changes in the osu-skin-folder
-            // if changes visible => refresh installed folder
-            // show the installed skins in a list
+            FindOsuSkinFolder();
+            LookForInstalledSkins();
 
-            // poc => should be move somewhere else:
+        }
 
-            // get list of installed skins
+        public void FindOsuSkinFolder()
+        {
+            skinRandomizer.UILayer.OsuSkinFolder = skinRandomizer.fileLogic.GetOsuDirectory();
+        }
 
-            skinRandomizer.UILayer.InstalledSkins = new System.Collections.ObjectModel.ObservableCollection<InstalledSkin>(fileLogic.GetInstalledSkins());
+        public async void LookForInstalledSkins()
+        {
+            ProgressDialogController controller = await this.ShowProgressAsync("Please wait...", "Search for installed skins");
+            controller.SetIndeterminate();
+            skinRandomizer.UILayer.InstalledSkins.Clear();
+            await Task.Delay(2000); // artificial wait => bad for user experience??? But looks nicer when the Dialog is visible, else the user would think there was a problem...idk
+            // search the skisn
+            skinRandomizer.UILayer.InstalledSkins = new System.Collections.ObjectModel.ObservableCollection<SkinInfo>(skinRandomizer.fileLogic.GetInstalledSkins(skinRandomizer.UILayer.OsuSkinFolder));
+            // check files
+            skinRandomizer.UILayer.InstalledSkins = new System.Collections.ObjectModel.ObservableCollection<SkinInfo>(skinRandomizer.fileLogic.GatherSkinnableElements(skinRandomizer.UILayer.InstalledSkins.ToList()));
+            await controller.CloseAsync();
+        }
 
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            LookForInstalledSkins();
+        }
+
+        private void btnGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            skinRandomizer.fileLogic.DetermineWhatSkinnablesToUse(skinRandomizer.UILayer.RandomizerOptions);
+
+            skinRandomizer.UILayer.UserGeneratedSkin = skinRandomizer.CreateSkin();
+            skinRandomizer.fileLogic.SaveCreatedSkin(skinRandomizer.UILayer.UserGeneratedSkin);
+            LookForInstalledSkins();
         }
     }
 }
